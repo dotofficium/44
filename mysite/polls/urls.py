@@ -25,4 +25,5 @@ urlpatterns = [
     path("emails/", views.emails, name="all-emails"), # email listing page
     path("email/create", views.create_email, name="create-email"),
     path("email/<int:pk>/", views.email_detail, name="detail-email"),
+    path("email/<int:pk>/update/", views.edit_email, name="edit-email"),
 ]
