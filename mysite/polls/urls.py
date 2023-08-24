@@ -1,6 +1,7 @@
 # view to url mapping
 
 from . import views
+from . import generic_views
 from django.urls import path
 app_name = "polls"
 
@@ -26,4 +27,13 @@ urlpatterns = [
     path("email/create", views.create_email, name="create-email"),
     path("email/<int:pk>/", views.email_detail, name="detail-email"),
     path("email/<int:pk>/update/", views.edit_email, name="edit-email"),
+    path("email/<int:pk>/edit/", views.edit_email_dj, name="edit-dj-email"),
+
+
+    # generic views
+    path("generic/emails/", generic_views.EmailListView.as_view(), name="generic-email-list"),
+    path("generic/emails/create", generic_views.EmailCreateView.as_view(), name="generic-email-create"),
+    path("generic/email/<int:pk>/", generic_views.EmailDetailView.as_view(), name="generic-email-detail"),
+    path("generic/email/update/<int:pk>/", generic_views.EmailUpdateView.as_view(), name="generic-email-update"),
+
 ]

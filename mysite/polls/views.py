@@ -170,3 +170,16 @@ def edit_email(request, pk):
 
     else:
         return render(request, template_name="email/edit_email.html", context={"email": email})
+
+def edit_email_dj(request, pk):
+    email = get_object_or_404(Email, pk=pk)
+    if request.method == "POST":
+        form = EmailForm(request.POST, instance=email)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("polls:all-emails", args=tuple()))
+        else:
+            return render(request, template_name="email/edit-dj.html", context={"form": form})
+    else:
+        form = EmailForm(instance=email)
+        return render(request, template_name="email/edit-dj.html", context={"form": form})
