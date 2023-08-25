@@ -33,6 +33,7 @@ urlpatterns = [
     # generic views
     path("generic/emails/", generic_views.EmailListView.as_view(), name="generic-email-list"),
     path("generic/emails/create", generic_views.EmailCreateView.as_view(), name="generic-email-create"),
+    path("generic/emails/form", generic_views.EmailFormView.as_view(), name="generic-email-formss"),
     path("generic/email/<int:pk>/", generic_views.EmailDetailView.as_view(), name="generic-email-detail"),
     path("generic/email/update/<int:pk>/", generic_views.EmailUpdateView.as_view(), name="generic-email-update"),
 

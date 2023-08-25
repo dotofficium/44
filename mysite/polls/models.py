@@ -26,3 +26,7 @@ class Email(models.Model):
 
     def __str__(self):
         return self.subject
+
+class TimeStamp(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
