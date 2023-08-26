@@ -6,6 +6,7 @@ from . import api
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 
+
 app_name = "polls"
 
 urlpatterns = [
@@ -45,8 +46,12 @@ urlpatterns = [
 
 api_urlpatterns = [
     path('api/v1/emails/', api.EmailList.as_view()),
+    path('api/v1/emails/<int:pk>/', api.EmailList.as_view()),
 ]
 
 api_urlpatterns = format_suffix_patterns(api_urlpatterns)
 
 urlpatterns += api_urlpatterns
+
+
+

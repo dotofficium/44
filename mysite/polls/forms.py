@@ -22,3 +22,8 @@ class EmailForm(forms.ModelForm):
     class Meta:
         model = Email
         fields = '__all__'
+
+class DummyEmailForm(forms.ModelForm):
+    class Meta:
+        model = Email
+        fields = '__all__'
