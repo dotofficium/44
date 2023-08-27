@@ -41,6 +41,10 @@ urlpatterns = [
     path("generic/email/<int:pk>/", generic_views.EmailDetailView.as_view(), name="generic-email-detail"),
     path("generic/email/update/<int:pk>/", generic_views.EmailUpdateView.as_view(), name="generic-email-update"),
 
+
+    # auth
+    path("login/", views.user_login, name="fun-login"),
+
 ]
 
 

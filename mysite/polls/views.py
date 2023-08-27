@@ -18,11 +18,16 @@ from .models import (
 )
 from .forms import (
     QuestionForm,
-    EmailForm
+    EmailForm,
+    Login
 )
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 
+@login_required(login_url="/polls/login/")
 def page(request):
+    # import ipdb;ipdb.set_trace()
     return HttpResponse("Hello world")
 
 
@@ -171,6 +176,7 @@ def edit_email(request, pk):
     else:
         return render(request, template_name="email/edit_email.html", context={"email": email})
 
+
 def edit_email_dj(request, pk):
     email = get_object_or_404(Email, pk=pk)
     if request.method == "POST":
@@ -183,3 +189,23 @@ def edit_email_dj(request, pk):
     else:
         form = EmailForm(instance=email)
         return render(request, template_name="email/edit-dj.html", context={"form": form})
+
+
+def user_login(request):
+    if request.method == "POST":
+        form = Login(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, username=username, password=password)
+            # import ipdb;ipdb.set_trace()
+            if user:
+                login(request, user)
+                return HttpResponseRedirect(reverse("polls:all-emails", args=tuple()))
+            else:
+                return render(request, template_name="auth/login.html", context={"form": form, "err": "Invalid User"})
+        else:
+            return render(request, template_name="auth/login.html", context={"form": form})
+    else:
+        form = Login()
+        return render(request, template_name="auth/login.html", context={"form": form})

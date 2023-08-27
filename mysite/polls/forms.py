@@ -27,3 +27,8 @@ class DummyEmailForm(forms.ModelForm):
     class Meta:
         model = Email
         fields = '__all__'
+
+
+class Login(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
