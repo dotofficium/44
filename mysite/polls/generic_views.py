@@ -23,6 +23,9 @@ class EmailListView(ListView):
         context = super().get_context_data(**kwargs)
         return context
 
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
+
 
 class EmailDetailView(DetailView):
     model = Email

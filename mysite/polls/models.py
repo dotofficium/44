@@ -1,5 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 
+
+class TimeStamp(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -18,7 +26,8 @@ class Choice(models.Model):
         return f"{self.question.question_text}.{self.choice_text}"
 
 
-class Email(models.Model):
+class Email(TimeStamp):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_emails")
     from_email = models.EmailField(help_text="From Email")
     to_email = models.EmailField(help_text="To Email")
     subject = models.CharField(max_length=500)
@@ -26,7 +35,3 @@ class Email(models.Model):
 
     def __str__(self):
         return self.subject
-
-class TimeStamp(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)

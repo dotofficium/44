@@ -21,7 +21,8 @@ class QuestionForm(forms.Form):
 class EmailForm(forms.ModelForm):
     class Meta:
         model = Email
-        fields = '__all__'
+        exclude = ["user"]
+
 
 class DummyEmailForm(forms.ModelForm):
     class Meta:

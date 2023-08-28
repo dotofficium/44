@@ -139,17 +139,20 @@ def question_djforms(request):
         form = QuestionForm()
         return render(request, template_name="polls/df_create_question.html", context={"form": form})
 
-
+@login_required(login_url="/polls/login/")
 def emails(request):
+    # emails = Email.objects.filter(user=request.user)
     emails = Email.objects.all()
     return render(request, template_name="email/emails.html", context={"emails": emails})
 
-
+@login_required(login_url="/polls/login/")
 def create_email(request):
     if request.method == "POST":
         form = EmailForm(request.POST)
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
             return HttpResponseRedirect(reverse("polls:all-emails", args=tuple()))
         else:
             return render(request, template_name="email/create.html", context={"form": form})
@@ -157,12 +160,12 @@ def create_email(request):
         form = EmailForm()
         return render(request, template_name="email/create.html", context={"form": form})
 
-
+@login_required(login_url="/polls/login/")
 def email_detail(request, pk):
     email = get_object_or_404(Email, pk=pk)
     return render(request, template_name="email/detail.html", context={"email": email})
 
-
+@login_required(login_url="/polls/login/")
 def edit_email(request, pk):
     email = get_object_or_404(Email, pk=pk)
     if request.method == "POST":
@@ -176,7 +179,7 @@ def edit_email(request, pk):
     else:
         return render(request, template_name="email/edit_email.html", context={"email": email})
 
-
+@login_required(login_url="/polls/login/")
 def edit_email_dj(request, pk):
     email = get_object_or_404(Email, pk=pk)
     if request.method == "POST":
